@@ -80,19 +80,19 @@ url akan menerima argumen berupa fungsi views yang akan kita pakai, seperti
 # 5. Screenshot Postman 
 
 1. HTML
-![Image Alt Text](Pictures/Screenshot(256).png)
+![Image Alt Text](Pictures/Screenshot (256).png)
 
 2. JSON
-![Image Alt Text](Pictures/Screenshot(253).png)
+![Image Alt Text](Pictures/Screenshot (253).png)
 
 3. JSON berdasarkan id
-![Image Alt Text](Pictures/Screenshot(252).png)
+![Image Alt Text](Pictures/Screenshot (252).png)
 
 4. XML
-![Image Alt Text](Pictures/Screenshot(254).png)
+![Image Alt Text](Pictures/Screenshot (254).png)
 
 5. XML berdasarkan id
-![Image Alt Text](Pictures/Screenshot(255).png)
+![Image Alt Text](Pictures/Screenshot (255).png)
 
 
 
