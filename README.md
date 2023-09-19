@@ -96,12 +96,20 @@ url akan menerima argumen berupa fungsi views yang akan kita pakai, seperti
 
 
 
+# 6 Bonus
+saya membuat kode
+    
+    ```html
+        {% with total_items=products|length %}
+        <p>Kamu menyimpan {{ total_items }} item pada aplikasi ini.</p>
+        {% endwith %}
 
+Menggunakan {% with %} tag untuk membuat variabel baru di django templates setelah itu di definisikan sebagai jumlah item pada product dengan cara menjumlahkan item di dalam products dengan 'length'.
 
 
 
 # TugaS 2 PBP
-
+s
 
 Jawaban Pertanyaan : 
 
