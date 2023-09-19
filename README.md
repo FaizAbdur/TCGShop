@@ -14,7 +14,7 @@ Link Adaptable :
 
 Jawaban Pertanyaan : 
 
-1. Apa perbedaan antara form "POST" dan form "GET" dalam django?
+# 1. Apa perbedaan antara form "POST" dan form "GET" dalam django?
         I. Metode Pengiriman data : 
             a. Form POST mengirim data dari forms ke server dengan menyembunyikan data saat permintaan http, sehingga tidak terlihat di url 
             b. Form GET mengirim data sebagai bagian dair URL, sehingga data terlihat dalam URL. 
@@ -22,7 +22,7 @@ Jawaban Pertanyaan :
             b. Form GET kurang aman karena data terlihat dalam URL dan dapat dengan mudah diakses atau disadap oleh pihak ketiga.
             
               
-2.  Apa perbedaan utama antara XML, JSON, dan HTML dalam konteks pengiriman data?
+# 2.  Apa perbedaan utama antara XML, JSON, dan HTML dalam konteks pengiriman data?
 
     XML (Extensible Markup Language):
     - Digunakan untuk menyimpan dan mentransfer data terstruktur.
@@ -33,7 +33,7 @@ Jawaban Pertanyaan :
     HTML (Hypertext Markup Language):
     - Digunakan untuk membuat tampilan halaman web, bukan untuk pertukaran data.
 
-3.  Mengapa JSON sering digunakan dalam pertukaran data antara aplikasi web modern?
+# 3.  Mengapa JSON sering digunakan dalam pertukaran data antara aplikasi web modern?
     JSON sering digunakan dalam pertukaran data antara aplikasi web modern karena:
 
     Ringkas dan Mudah Dibaca: JSON memiliki format yang ringkas dan mudah dibaca oleh manusia, membuatnya ideal untuk pertukaran data antara aplikasi web.
