@@ -15,11 +15,12 @@ Link Adaptable :
 Jawaban Pertanyaan : 
 
 # 1. Apa perbedaan antara form "POST" dan form "GET" dalam django?
-* I. Metode Pengiriman data : 
-    a. Form POST mengirim data dari forms ke server dengan menyembunyikan data saat permintaan http, sehingga tidak terlihat di url 
-    b. Form GET mengirim data sebagai bagian dair URL, sehingga data terlihat dalam URL. 
-* II. a. Form POST lebih aman untuk mengirim data sensitif karena data tidak terlihat dalam URL dan terlindungi dengan baik.
-    b. Form GET kurang aman karena data terlihat dalam URL dan dapat dengan mudah diakses atau disadap oleh pihak ketiga.
+*  Metode Pengiriman data : 
+    1. Form POST mengirim data dari forms ke server dengan menyembunyikan data saat permintaan http, sehingga tidak terlihat di url 
+    2. Form GET mengirim data sebagai bagian dair URL, sehingga data terlihat dalam URL. 
+
+*   1. Form POST lebih aman untuk mengirim data sensitif karena data tidak terlihat dalam URL dan terlindungi dengan baik.
+    2. Form GET kurang aman karena data terlihat dalam URL dan dapat dengan mudah diakses atau disadap oleh pihak ketiga.
             
               
 # 2.  Apa perbedaan utama antara XML, JSON, dan HTML dalam konteks pengiriman data?
@@ -79,25 +80,27 @@ url akan menerima argumen berupa fungsi views yang akan kita pakai, seperti
 # 5. Screenshot Postman 
 
 1. HTML
-![Image Alt Text](Pictures/Screenshot(256).jpg)
+![Image Alt Text](Pictures/Screenshot(256).png)
 
 2. JSON
-![Image Alt Text](Pictures/Screenshot(253).jpg)
+![Image Alt Text](Pictures/Screenshot(253).png)
 
 3. JSON berdasarkan id
-![Image Alt Text](Pictures/Screenshot(252).jpg)
+![Image Alt Text](Pictures/Screenshot(252).png)
 
 4. XML
-![Image Alt Text](Pictures/Screenshot(254).jpg)
+![Image Alt Text](Pictures/Screenshot(254).png)
 
 5. XML berdasarkan id
-![Image Alt Text](Pictures/Screenshot(255).jpg)
+![Image Alt Text](Pictures/Screenshot(255).png)
 
 
 
 
 
 
+
+# TugaS 2 PBP
 
 
 Jawaban Pertanyaan : 
