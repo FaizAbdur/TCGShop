@@ -15,10 +15,10 @@ Link Adaptable :
 Jawaban Pertanyaan : 
 
 # 1. Apa perbedaan antara form "POST" dan form "GET" dalam django?
-I. Metode Pengiriman data : 
+* I. Metode Pengiriman data : 
     a. Form POST mengirim data dari forms ke server dengan menyembunyikan data saat permintaan http, sehingga tidak terlihat di url 
     b. Form GET mengirim data sebagai bagian dair URL, sehingga data terlihat dalam URL. 
-II. a. Form POST lebih aman untuk mengirim data sensitif karena data tidak terlihat dalam URL dan terlindungi dengan baik.
+* II. a. Form POST lebih aman untuk mengirim data sensitif karena data tidak terlihat dalam URL dan terlindungi dengan baik.
     b. Form GET kurang aman karena data terlihat dalam URL dan dapat dengan mudah diakses atau disadap oleh pihak ketiga.
             
               
@@ -35,10 +35,19 @@ HTML (Hypertext Markup Language):
 
 # 3.  Mengapa JSON sering digunakan dalam pertukaran data antara aplikasi web modern?
     
-JSON sering digunakan dalam pertukaran data antara aplikasi web modern karena:
+- JSON sering digunakan dalam pertukaran data antara aplikasi web modern karena:
 
-Ringkas dan Mudah Dibaca: JSON memiliki format yang ringkas dan mudah dibaca oleh manusia, membuatnya ideal untuk pertukaran data antara aplikasi web.
+- Ringkas dan Mudah Dibaca: JSON memiliki format yang ringkas dan mudah dibaca oleh manusia, membuatnya ideal untuk pertukaran data antara aplikasi web.
 
-Objek Terstruktur: JSON memungkinkan representasi data dalam bentuk objek yang terstruktur, yang mirip dengan struktur data dalam bahasa pemrograman, sehingga mudah diolah oleh kode.
+- Objek Terstruktur: JSON memungkinkan representasi data dalam bentuk objek yang terstruktur, yang mirip dengan struktur data dalam bahasa pemrograman, sehingga mudah diolah oleh kode.
 
-Ringan dan Efisien: JSON memiliki overhead yang minimal, sehingga memungkinkan pertukaran data dengan cepat dan efisien melalui jaringan.
+- Ringan dan Efisien: JSON memiliki overhead yang minimal, sehingga memungkinkan pertukaran data dengan cepat dan efisien melalui jaringan.
+
+# 4. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step 
++ Membuat berkas forms.py untuk dapat menerima produk baru. isi forms dengan fields yang sesuai fields dari model ini, dan definisikan model menjadi objek apa agar saat form disimpan akan membuat objek itu 
++ Kita dapat membuat fungsi dengan pertama membuat variabel yang dipakai untuk menyimpan semua hasil query data yang ada di produk yaitu adalah 
+```python
+   data = Product.objects.all()
+   
++ untuk menyelesaikan 
+
