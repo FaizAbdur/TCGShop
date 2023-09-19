@@ -1,34 +1,43 @@
-<head>
-    <style>
+{% extends 'base.html' %}
 
-        h1, h2, p {
-            margin: 0;
-            padding: 0;
-        }
+{% block content %}
+    <h1>Shopping List Page</h1>
 
-        h1 {
-            font-family: Monaco, monospace;
-            font-size: 3em;
-        }
+    <h5>Name:</h5>
+    <p>{{name}}</p>
 
-        p {
-            font-family: Arial, sans-serif;
-            font-size : 1em;
-        }
+    <h5>Class:</h5>
+    <p>{{class}}</p>    
+    <img src="https://upload.wikimedia.org/wikipedia/en/2/2b/Yugioh_Card_Back.jpg" alt="The back side of a card">
 
-        h5{
-            font-family: Times New Roman, Times;
-            font-size : 2em;
-        }
-    </style>
-</head>
 
-<h1>{{title}}</h1>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Description</th>
+            <th>Date Added</th>
+        </tr>
+    
+        {% comment %} Berikut cara memperlihatkan data produk di bawah baris ini {% endcomment %}
+    
+        {% for product in products %}
+            <tr>
+                <td>{{product.name}}</td>
+                <td>{{product.price}}</td>
+                <td>{{product.description}}</td>
+                <td>{{product.date_added}}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    
+    <br />
+    
+    <a href="{% url 'main:create_product' %}">
+        <button>
+            Add New Product
+        </button>
+    </a>
+    
+    {% endblock content %}
 
-<img src="https://upload.wikimedia.org/wikipedia/en/2/2b/Yugioh_Card_Back.jpg" alt="The back side of a card">
-
-<h5>Name: </h5>
-<p>{{ name }}<p>    
-<h5>Class: </h5>
-<p>{{ class }}<p>
-...
