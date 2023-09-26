@@ -1,6 +1,5 @@
-# Tugas3PBP
-Tugas 3 pembuatan MVT TCG 
-
+# TugasPBP
+Tugas  pembuatan MVT TCG 
 
 Nama    : Faiz Abdurrachman 
 
@@ -11,7 +10,131 @@ Kelas   : PBP B
 
 Link Adaptable : 
 
+Tugas 4
 
+## 1. Django UserCreationForm:
+
+Django UserCreationForm adalah formulir bawaan yang disediakan oleh Django untuk mempermudah pembuatan akun pengguna (user account) dalam aplikasi web yang dibangun dengan Django. Formulir ini menyediakan bidang-bidang seperti username, password, dan konfirmasi password untuk memungkinkan pengguna mendaftar dengan mudah. Kelebihan dari UserCreationForm adalah:
+
+* Kemudahan Penggunaan: UserCreationForm menyediakan alat yang kuat dan mudah digunakan untuk mengelola proses pendaftaran pengguna.
+* Validasi Bawaan: Form ini juga mencakup validasi bawaan, seperti memeriksa apakah password dan konfirmasi password cocok,     sehingga mengurangi risiko kesalahan pengguna.
+Namun, ada beberapa kekurangan dari UserCreationForm,  ketika ingin menyesuaikan proses pendaftaran pengguna secara signifikan. Dalam situasi seperti itu, Anda mungkin perlu membuat formulir pendaftaran kustom.
+
+## 2. Perbedaan Antara Autentikasi dan Otorisasi:
+
+* Autentikasi (Authentication): Autentikasi adalah proses verifikasi identitas pengguna. Dalam konteks Django, ini berarti memeriksa apakah pengguna yang mencoba mengakses aplikasi telah berhasil masuk atau belum.
+
+* Otorisasi (Authorization): Otorisasi adalah proses pengendalian akses ke sumber daya berdasarkan hak atau izin yang dimiliki oleh pengguna. Setelah pengguna berhasil diautentikasi, Django memeriksa izin apa yang dimiliki oleh pengguna tersebut untuk mengakses berbagai bagian dari aplikasi. 
+
+Keduanya penting dalam konteks Django karena autentikasi memastikan bahwa hanya pengguna yang sah yang dapat mengakses aplikasi Anda, sementara otorisasi memungkinkan Anda mengendalikan apa yang dapat dilakukan oleh pengguna yang telah diautentikasi.
+
+## 3. Cookies dalam Konteks Aplikasi Web dan Penggunaan di Django:
+
+* Cookies: Cookies adalah data kecil yang disimpan di sisi klien (biasanya dalam browser) dan digunakan untuk menyimpan informasi tentang sesi pengguna atau preferensi pengguna dalam aplikasi web. Mereka dapat digunakan untuk mengidentifikasi pengguna yang telah masuk atau untuk menyimpan data sesi, seperti keranjang belanja dalam toko online.
+
+* Penggunaan Cookies dalam Django: Django menggunakan cookies untuk mengelola data sesi pengguna secara default. Ini berarti bahwa informasi seperti ID sesi pengguna dapat disimpan dalam cookie untuk mengidentifikasi pengguna yang telah masuk. Django memiliki dukungan bawaan untuk mengelola cookies melalui modul 
+    ```
+    django.contrib.sessions.middleware.SessionMiddleware.
+
+## 4. Keamanan Penggunaan Cookies:
+
+* Secara Default Relatif Aman: Penggunaan cookies dalam pengembangan web umumnya relatif aman, terutama jika Anda mengikuti praktik terbaik dalam mengelola cookies. Django memberikan beberapa perlindungan bawaan terhadap serangan yang umum terkait cookies, seperti Cross-Site Scripting (XSS) dan Cross-Site Request Forgery (CSRF).
+
+* Potensi Risiko: Namun, penggunaan cookies dapat menjadi risiko jika tidak dikelola dengan baik. Risiko potensial termasuk peretasan sesi (session hijacking), di mana peretas mencoba mencuri ID sesi pengguna dari cookie untuk mengakses akun pengguna. Oleh karena itu, Anda perlu mengimplementasikan praktik keamanan seperti menggunakan HTTPS untuk mengenkripsi data yang ditransmisikan melalui cookie dan mengelola cookie dengan hati-hati.
+
+Penting untuk memahami bahwa cookie hanya aman sejauh pengembang aplikasi web memastikan bahwa mereka tidak digunakan untuk tujuan jahat. Selalu penting untuk memahami praktik terbaik dalam mengelola cookies dan mengamankannya sesuai kebutuhan aplikasi Anda.
+
+## 5. Per-Checkpoint
+
+### 1. Implementasi fungsi registrasi, login, dan logout 
+Mengimplementasikan fungsi registrasi, login, dan logout dengan mengimport "redirect", "UserCreationForm", dan "Messages". Kita menggunakan user creation form untuk menjadi formulir pendaftaran. Setelah itu, implementasikan fungsi register di views.py.
+
+```python
+def register(request):
+    form = UserCreationForm()
+
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form is_valid():
+            form.save()
+            messages.success(request, 'Your account has been successfully created!')
+            return redirect('main:login')
+    context = {'form':form}
+    return render(request, 'register.html', context)
+```
+Setelah menambah register buatlah template html untuk menampilkannya, setelah itu buat fungsi login untuk bisa authenticate yaitu
+untuk memperlihatkan autentikasi dan login 
+
+```python
+
+from django.contrib.auth import authenticate, login
+
+def login_user(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('main:show_main')
+        else:
+            messages.info(request, 'Sorry, incorrect username or password. Please try again.')
+    context = {}
+    return render(request, 'login.html', context)
+```
+setelah itu buatlah html untuk bisa menjadi template terhadap views yaitu login.html, setelah itu tambahkan main dan path
+Terakhir buatlah import logout agar bisa menambah fungsi 
+
+```python
+def logout_user(request):
+    logout(request)
+    return redirect('main:login')
+```
+
+setelah implementasi logout tambahkan path ke url dan views 
+
+### 2. Membuat dua akun pengguna dengan masing-masing tiga dummy data menggunakan model yang telah dibuat pada aplikasi sebelumnya untuk setiap akun di lokal.
+
+Registrasikan akun di web lokal sehingga terdapat 2 akun setelah itu tambah 3 product dengan model menggunakan create product 
+kita bisa melakukan 2 akun dengan registrasi.
+### 3. Menghubungkan model Item dengan User.
+
+Kita menghubungkan objek produk dengan user kita menggunakan ForeignKey sebagai relationship antara user dan product
+```
+def create_product(request):
+ form = ProductForm(request.POST or None)
+
+ if form.is_valid() and request.method == "POST":
+     product = form.save(commit=False)
+     product.user = request.user
+     product.save()
+     return HttpResponseRedirect(reverse('main:show_main'))
+```
+### 4. Menampilkan detail informasi pengguna yang sedang logged in seperti username dan menerapkan cookies seperti last login pada halaman utama aplikasi.
+
+Kita bisa menggunakan cookies dengan cara implementasi kode cookies ini adalah 
+```python
+
+if user is not None:
+    login(request, user)
+    response = HttpResponseRedirect(reverse("main:show_main")) 
+    response.set_cookie('last_login', str(datetime.datetime.now()))
+    return response
+
+    last_login': request.COOKIES['last_login'],
+
+    response.delete_cookie('last_login')
+```
+kode ini dipakai untuk menggunakan last_login dan dicatat dan dipakai sebagai set cookie di data sessionid dan crsftoken
+
+
+
+
+
+
+
+
+# Tugas 3
 Jawaban Pertanyaan : 
 
 # 1. Apa perbedaan antara form "POST" dan form "GET" dalam django?
@@ -36,7 +159,7 @@ HTML (Hypertext Markup Language):
 
 # 3.  Mengapa JSON sering digunakan dalam pertukaran data antara aplikasi web modern?
     
-- JSON sering digunakan dalam pertukaran data antara aplikasi web modern karena:
+JSON sering digunakan dalam pertukaran data antara aplikasi web modern karena:
 
 - Ringkas dan Mudah Dibaca: JSON memiliki format yang ringkas dan mudah dibaca oleh manusia, membuatnya ideal untuk pertukaran data antara aplikasi web.
 
@@ -108,7 +231,7 @@ Menggunakan {% with %} tag untuk membuat variabel baru di django templates setel
 
 
 
-# TugaS 2 PBP
+# Tugas 2 PBP
 s
 
 Jawaban Pertanyaan : 
