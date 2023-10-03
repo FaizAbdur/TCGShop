@@ -10,6 +10,161 @@ Kelas   : PBP B
 
 Link Adaptable : 
 
+
+# Tugas 5 
+1. Manfaat dari Setiap Element Selector:
+
+   - **Universal Selector (*):** Selector ini memilih semua elemen dalam dokumen HTML. Waktu yang tepat untuk menggunakannya adalah ketika Anda ingin mengaplikasikan gaya ke seluruh elemen pada halaman web. Namun, sebaiknya digunakan dengan hati-hati karena dapat mengakibatkan overhead yang tidak perlu jika tidak diperlukan.
+
+   - **Element Selector (e.g., p, h1, div):** Selector ini memilih semua elemen dengan nama tag yang sesuai. Ini berguna ketika Anda ingin mengaplikasikan gaya ke semua elemen dari jenis tertentu pada halaman web. Contohnya, jika Anda ingin mengubah font untuk semua elemen <p> dalam dokumen.
+
+   - **Class Selector (.classname):** Selector ini memilih semua elemen yang memiliki atribut class yang sesuai. Ini sangat berguna ketika Anda ingin mengaplikasikan gaya khusus ke sekelompok elemen yang memiliki class yang sama. Ini adalah salah satu selector yang paling umum digunakan dalam CSS.
+
+   - **ID Selector (#idname):** Selector ini memilih elemen dengan atribut ID yang sesuai. Waktu yang tepat untuk menggunakannya adalah ketika Anda ingin mengaplikasikan gaya khusus pada satu elemen tertentu dalam dokumen. ID selector harus unik dalam satu halaman web.
+
+   - **Pseudo-class Selector (e.g., :hover, :nth-child):** Selector ini memilih elemen berdasarkan kondisi tertentu, seperti saat elemen dihover oleh mouse atau elemen berada pada urutan ke-n dalam suatu elemen parent. Ini berguna untuk memberikan efek interaktif dan gaya yang dinamis pada halaman web.
+
+2. HTML5 Tag yang Umum:
+
+   HTML5 memperkenalkan banyak tag baru. Beberapa yang umumnya digunakan termasuk:
+   - `<header>`: Untuk mengelompokkan elemen-elemen kepala seperti logo, judul, dan navigasi.
+   - `<nav>`: Untuk mengelompokkan elemen navigasi, seperti menu.
+   - `<section>`: Untuk mengelompokkan konten dalam bagian-bagian tematik pada halaman.
+   - `<article>`: Untuk mengelompokkan konten independen yang dapat berdiri sendiri.
+   - `<aside>`: Untuk mengelompokkan konten terkait yang seringkali muncul di samping konten utama.
+   - `<footer>`: Untuk mengelompokkan elemen-elemen kaki halaman seperti informasi kontak atau hak cipta.
+
+3. Perbedaan antara Margin dan Padding:
+
+   - **Margin:** Margin adalah ruang di luar batas elemen. Ini mempengaruhi jarak antara elemen tersebut dengan elemen-elemen lain di sekitarnya. Margin digunakan untuk mengatur jarak antara elemen dengan elemen lain di sekitarnya.
+
+   - **Padding:** Padding adalah ruang di dalam batas elemen. Ini mempengaruhi jarak antara konten elemen dan batasnya sendiri. Padding digunakan untuk mengatur jarak antara konten elemen dengan batasnya.
+
+4. Perbedaan antara Framework CSS Tailwind dan Bootstrap:
+
+   - **Bootstrap:**
+     - Bootstrap adalah framework CSS yang lebih berat dan kompleks.
+     - Memiliki desain dan komponen yang sudah siap pakai, yang memungkinkan pembuatan situs web dengan cepat.
+     - Lebih mengutamakan konvensi dan gaya yang konsisten.
+     - Cocok untuk proyek besar dan situs web yang memerlukan komponen yang kaya.
+
+   - **Tailwind:**
+     - Tailwind adalah framework CSS yang lebih ringan dan fleksibel.
+     - Menggunakan pendekatan utility-first, yang memungkinkan pengguna untuk membangun komponen sesuai kebutuhan dengan menggabungkan kelas-kelas utilitas.
+     - Memungkinkan pengguna untuk mengontrol setiap aspek desain secara detail.
+     - Cocok untuk proyek kecil hingga menengah, serta untuk pengembang yang ingin tingkat fleksibilitas yang tinggi dalam desain.
+
+    Kapan sebaiknya Anda menggunakan Bootstrap atau Tailwind tergantung pada kebutuhan proyek Anda. Bootstrap cocok jika Anda ingin cepat dalam membangun situs dengan komponen siap pakai dan desain yang lebih konsisten. Tailwind cocok jika Anda ingin memiliki kendali yang lebih besar atas desain Anda dan ingin menghindari overhead yang tidak perlu.
+
+
+5. Perubahan yang di checklist tersebut adalah
+
+    Penggunaan checklist yang dilakukan adalah mengedit main,base dan register.html 
+    ```html
+    {% extends 'base.html' %}
+
+    {% block content %}
+        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #aaaaaa;">
+        <div class="container">
+                <a class="navbar-brand" href="#" style="font-weight: bold; font-size: 24px;">TCG Store</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link name-link" href="#" style="font-size: 20px; font-weight: bold; font-family: 'cursive';">Name: {{ name }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link class-link" href="#" style="font-size: 20px; font-weight: bold; font-family: 'cursive';">Class: {{ class }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link logout-link" href="{% url 'main:logout' %}" style="font-size: 20px; font-weight: bold; font-family: 'cursive';">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container mt-5">
+            <h1 class="mb-4">Products</h1>
+
+            <div class="row">
+                {% for product in products %}
+                    <div class="col-md-4">
+                        <div class="outer-card" style="background-color: {% if forloop.last %}#D3D3D3{% else %}#ffffff{% endif %};">
+                            <div class="inner-card card mb-4 {% if forloop.last %}last-row{% endif %}">
+                                <img src="https://upload.wikimedia.org/wikipedia/en/2/2b/Yugioh_Card_Back.jpg" alt="The back side of a card" class="card-img-top">
+                                <div class="card-body">
+                                    <h5 class="card-title" style="font-size: 18px; font-weight: bold; font-family: 'Arial, sans-serif';">Product Name: {{ product.name }}</h5>
+                                    <p class="card-text" style="font-size: 16px; font-family: 'Times New Roman', serif;">Description: {{ product.description }}</p>
+                                    <p class="card-text" style="font-size: 16px; font-family: 'Courier New', monospace;">Price: {{ product.price }}</p>
+                                    <p class="card-text" style="font-size: 16px; font-family: 'Verdana, sans-serif';">Amount: {{ product.amount }}</p>
+                                    <a href="{% url 'main:edit_product' product.pk %}" class="btn btn-primary btn-sm">Edit</a>
+                                    <a href="{% url 'main:delete_product' product.pk %}" class="btn btn-danger btn-sm">Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <p class="mt-4">Kamu menyimpan {{ products|length }} item pada aplikasi ini.</p>
+
+            <div class="mt-4">
+                <a href="{% url 'main:create_product' %}" class="btn btn-success">Add New Product</a>
+            </div>
+
+            <h5 class="mt-4">Sesi terakhir login: {{ last_login }}</h5>
+
+            <div class="mt-4">
+                <a href="{% url 'main:logout' %}" class="btn btn-secondary">Logout</a>
+            </div>
+        </div>
+
+        <style>
+            .outer-card {
+                background-color: #ffffff;
+                padding: 20px;
+                border: 1px solid #ccc; 
+                box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            }
+            
+            .inner-card {
+                background-color: #f7f7f7;
+                border: none;
+                border-radius: 15px; /* Rounded edges for inner cards */
+            }
+            
+            .inner-card.last-row {
+                background-color: beige; /* Background color for the last row */
+            }
+
+        </style>
+        {% endblock content %}
+    ```
+
+ini mengubah sehingga terdapat background color saat dipencet dan terdapat warna perubahan di inner card dan outercard sehingga bisa terdapat perbedaan warna dan lebih rapih
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Tugas 4
 
 ## 1. Django UserCreationForm:

@@ -1,19 +1,51 @@
-{% extends 'base.html' %} 
+{% extends 'base.html' %}
 
 {% block content %}
-<h1>Add New Product</h1>
+<div class="add-product-container">
+    <h1>Add New Product</h1>
 
-<form method="POST">
-    {% csrf_token %}
-    <table>
-        {{ form.as_table }}
-        <tr>
-            <td></td>
-            <td>
-                <input type="submit" value="Add Product"/>
-            </td>
-        </tr>
-    </table>
-</form>
+    <form method="POST">
+        {% csrf_token %}
+        <table class="add-product-table">
+            {{ form.as_table }}
+            <tr>
+                <td></td>
+                <td>
+                    <input type="submit" value="Add Product" class="btn btn-success">
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
 
+<style>
+    .add-product-container {
+        height: 100vh; /* Set the container height to fill the entire viewport height */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: #f7f7f7;
+    }
+
+    h1 {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    .add-product-table {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .btn {
+        width: 100%;
+        padding: 10px;
+        background-color: #28a745; /* Green color for success */
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+</style>
 {% endblock %}

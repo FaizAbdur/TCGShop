@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<div class="edit-product-container">
+    <h1>Edit Product</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+        <table class="edit-product-table">
+            {{ form.as_table }}
+            <tr>
+                <td></td>
+                <td>
+                    <input type="submit" value="Edit Product" class="btn btn-primary">
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<style>
+    .edit-product-container {
+        height: 100vh; /* Set the container height to fill the entire viewport height */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: #f7f7f7;
+    }
+
+    h1 {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    .edit-product-table {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .btn {
+        width: 100%;
+        padding: 10px;
+        background-color: #007BFF;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+</style>
+{% endblock %}

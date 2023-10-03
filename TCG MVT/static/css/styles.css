@@ -1,0 +1,8 @@
+/* styles.css */
+
+body {
+    background-image: url('/static/pictures/wall.jpg'); /* Use the correct path */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed; /* Optional: To fix the background while scrolling */
+}

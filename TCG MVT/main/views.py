@@ -14,6 +14,7 @@ from django.contrib.auth import logout
 import datetime
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.http import JsonResponse
 
 # Create your views here.
 
@@ -90,4 +91,72 @@ def logout_user(request):
     logout(request)
     response = HttpResponseRedirect(reverse('main:login'))
     response.delete_cookie('last_login')
+    return response
+
+def increment_stock(request):
+    if request.method == 'POST' and request.is_ajax():
+        product_id = request.POST.get('product_id')
+        try:
+            product = Product.objects.get(pk=product_id)
+            # Tambah satu pada jumlah stok
+            product.stock += 1
+            product.save()
+            data = {'new_stock': product.stock}
+            return JsonResponse(data)
+        except Product.DoesNotExist:
+            pass
+    return JsonResponse({'error': 'Invalid Request'})
+
+def decrement_stock(request):
+    if request.method == 'POST' and request.is_ajax():
+        product_id = request.POST.get('product_id')
+        try:
+            product = Product.objects.get(pk=product_id)
+            # Kurangi satu dari jumlah stok jika lebih dari nol
+            if product.stock > 0:
+                product.stock -= 1
+                product.save()
+            data = {'new_stock': product.stock}
+            return JsonResponse(data)
+        except Product.DoesNotExist:
+            pass
+    return JsonResponse({'error': 'Invalid Request'})
+
+def delete_product(request):
+    if request.method == 'POST' and request.is_ajax():
+        product_id = request.POST.get('product_id')
+        try:
+            product = Product.objects.get(pk=product_id)
+            product.delete()
+            return JsonResponse({'success': 'Product deleted successfully'})
+        except Product.DoesNotExist:
+            pass
+    return JsonResponse({'error': 'Invalid Request'})
+
+def edit_product(request, id):
+    # Get product berdasarkan ID
+    product = Product.objects.get(pk = id)
+
+    # Set product sebagai instance dari form
+    form = ProductForm(request.POST or None, instance=product)
+
+    if form.is_valid() and request.method == "POST":
+        # Simpan form dan kembali ke halaman awal
+        form.save()
+        return HttpResponseRedirect(reverse('main:show_main'))
+
+    context = {'form': form}
+    return render(request, "edit_product.html", context)
+
+def delete_product(request, id):
+    # Get data berdasarkan ID
+    product = Product.objects.get(pk = id)
+    # Hapus data
+    product.delete()
+    # Kembali ke halaman awal
+    return HttpResponseRedirect(reverse('main:show_main'))
+
+def clean_cookie(request):
+    response = HttpResponse('Cleaning the cookie')
+    response.delete_cookie('sessionid')  # Replace 'last_login' with the name of the cookie you want to clean
     return response
