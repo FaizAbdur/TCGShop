@@ -11,6 +11,81 @@ Kelas   : PBP B
 Link Adaptable : 
 
 
+
+# Tugas 6
+
+1. **Perbedaan antara Asynchronous Programming dan Synchronous Programming**:
+
+   - **Synchronous Programming**: Dalam synchronous programming, tugas-tugas dieksekusi secara berurutan, satu per satu. Setiap tugas harus menunggu tugas sebelumnya selesai sebelum tugasnya sendiri dapat dijalankan. Ini berarti bahwa jika ada tugas yang memerlukan waktu lama untuk selesai, maka seluruh eksekusi program akan terhenti hingga tugas tersebut selesai.
+
+   - **Asynchronous Programming**: Dalam asynchronous programming, tugas-tugas dieksekusi secara konkuren atau tidak berurutan. Tugas-tugas yang memerlukan waktu lama tidak akan menghentikan eksekusi program secara keseluruhan. Sebaliknya, program akan melanjutkan eksekusi tugas-tugas lain sambil menunggu tugas asinkron untuk selesai. Ini memungkinkan aplikasi untuk tetap responsif dan efisien.
+
+2. **Paradigma Event-Driven Programming**:
+   
+   Paradigma event-driven programming adalah pendekatan di mana program merespon kejadian atau peristiwa yang terjadi, seperti klik tombol, masukan pengguna, atau permintaan jaringan. Ini mengharuskan penggunaan callback atau listener untuk menangani kejadian tersebut. Contoh penerapannya adalah dalam JavaScript, di mana Anda dapat menggunakan event listeners untuk merespons peristiwa seperti klik mouse, pengisian formulir, atau pemrosesan data dari permintaan jaringan AJAX.
+
+   Contoh penerapannya pada tugas ini mungkin adalah menambahkan event listener untuk tombol "Kirim" dalam formulir web. Ketika tombol ini diklik, sebuah fungsi dapat dipanggil untuk mengirim data melalui AJAX ke server.
+
+3. **Penerapan Asynchronous Programming pada AJAX**:
+
+   Penerapan asynchronous programming pada AJAX memungkinkan permintaan jaringan (seperti mengambil data dari server) dilakukan tanpa menghentikan eksekusi program secara keseluruhan. Dalam JavaScript, Anda dapat menggunakan callback atau Promise untuk menangani respons dari permintaan jaringan tanpa menghentikan eksekusi program. Contoh penggunaannya adalah sebagai berikut:
+
+   ```javascript
+   fetch('https://api.example.com/data')
+     .then(response => response.json())
+     .then(data => {
+       // Lakukan sesuatu dengan data yang diterima
+     })
+     .catch(error => {
+       // Tangani kesalahan jika ada
+     });
+   ```
+
+4. **Perbandingan Fetch API dan jQuery**:
+
+   - **Fetch API** adalah standar JavaScript yang memungkinkan Anda melakukan permintaan jaringan asinkron dengan cara yang modern dan bersih. Ini lebih ringan dan memiliki dukungan yang baik di sebagian besar peramban.
+
+   - **jQuery** adalah sebuah library JavaScript yang memiliki banyak fitur, termasuk AJAX. Namun, itu adalah library yang lebih besar dan mungkin memakan lebih banyak sumber daya. Selain itu, dengan perbaikan terbaru dalam Fetch API dan standar JavaScript, penggunaan jQuery mungkin tidak lagi diperlukan dalam banyak kasus.
+
+   Pilihan antara keduanya tergantung pada proyek Anda. Jika Anda hanya membutuhkan kemampuan AJAX sederhana, Fetch API adalah pilihan yang baik. Jika Anda telah berinvestasi dalam penggunaan jQuery dalam proyek Anda atau memerlukan fitur-fitur tambahan yang ditawarkan oleh jQuery, maka jQuery mungkin tetap relevan.
+
+5. **Cara Mengimplementasikan Checklist Secara Step-by-Step**:
+
+   - Tentukan apakah Anda akan menggunakan Fetch API atau jQuery untuk AJAX, berdasarkan kebutuhan proyek.
+   - Implementasikan event-driven programming dengan menambahkan event listeners untuk elemen-elemen yang perlu merespons peristiwa pengguna.
+   - Gunakan asynchronous programming (misalnya, Promise) untuk mengelola permintaan jaringan (AJAX) tanpa menghentikan eksekusi program.
+   - Tangani respons dari permintaan jaringan dan lakukan tindakan yang sesuai berdasarkan data yang diterima atau tangani kesalahan jika ada.
+   - Pertimbangkan keuntungan dan kerugian dari penggunaan Fetch API dan jQuery, dan pilih teknologi yang paling sesuai untuk proyek Anda.
+   
+Dengan mengikuti langkah-langkah ini, Anda dapat mengimplementasikan asynchronous programming dan paradigma event-driven programming pada proyek Anda dengan baik, serta memilih teknologi yang paling sesuai untuk kebutuhan Anda.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Tugas 5 
 1. Manfaat dari Setiap Element Selector:
 

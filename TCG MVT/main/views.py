@@ -15,6 +15,8 @@ import datetime
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+
 
 # Create your views here.
 
@@ -160,3 +162,36 @@ def clean_cookie(request):
     response = HttpResponse('Cleaning the cookie')
     response.delete_cookie('sessionid')  # Replace 'last_login' with the name of the cookie you want to clean
     return response
+
+def get_product_json(request):
+    product_item = Product.objects.all()
+    return HttpResponse(serializers.serialize('json', product_item))
+
+@csrf_exempt
+def create_product_ajax(request):
+    if request.method == "POST":
+        user = request.user
+        name = request.POST.get('name')
+        description = request.POST.get('description')
+        price = request.POST.get('price')
+        amount = request.POST.get('amount')
+
+        new_product = Product.objects.create(
+            name=name,
+            description=description,
+            price=price,
+            amount=amount,
+            user = user
+        )
+        new_product.save()
+        return JsonResponse({'status': 'success', 'message': 'Product added successfully.'})
+
+def delete_product_ajax(request, id):
+    if request.method == 'DELETE':
+        try:
+            product = Product.objects.get(pk=id)
+            product.delete()
+            return JsonResponse({'status': 'success'})
+        except Product.DoesNotExist:
+            return JsonResponse({'status': 'error', 'message': 'Product not found'}, status=404)
+    

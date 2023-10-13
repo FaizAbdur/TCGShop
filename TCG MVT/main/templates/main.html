@@ -1,31 +1,53 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #aaaaaa;">
-    <div class="container">
-            <a class="navbar-brand" href="#" style="font-weight: bold; font-size: 24px;">TCG Store</a>
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #282626; padding: 20px;">
+        <div class="container">
+            <a class="navbar-brand" href="#" style="font-weight: bold; font-size: 24px; color: white;">TCG Store</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link name-link" href="#" style="font-size: 20px; font-weight: bold; font-family: 'cursive';">Name: {{ name }}</a>
+                        <a class="nav-link name-link" href="#" style="font-size: 20px; font-weight: bold; font-family: 'cursive'; color: white;">Name: {{ name }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link class-link" href="#" style="font-size: 20px; font-weight: bold; font-family: 'cursive';">Class: {{ class }}</a>
+                        <a class "nav-link class-link" href="#" style="font-size: 20px; font-weight: bold; font-family: 'cursive'; color: white;">Class: {{ class }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link logout-link" href="{% url 'main:logout' %}" style="font-size: 20px; font-weight: bold; font-family: 'cursive';">Logout</a>
+                        <a class="nav-link logout-link" href="{% url 'main:logout' %}" style="font-size: 20px; font-weight: bold; font-family: 'cursive'; color: white;">Logout</a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <div class="container mt-5">
-        <h1 class="mb-4">Products</h1>
+    <div class="modal fade" id="exampleModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Product</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form id="add-product-form">
+                        {% csrf_token %}
+                        <input type="text" id="name" placeholder="Name">
+                        <input type="text" id="description" placeholder="Description">
+                        <input type="number" id="price" placeholder="Price">
+                        <input type="number" id="amount" placeholder="Amount">
+                        <button type="submit" class="btn btn-primary">Add</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
+
+    <div class="container mt-5">
+        <h1 class="mb-4" style="color: white;">Products</h1>
+        <div id="products"></div>
         <div class="row">
             {% for product in products %}
                 <div class="col-md-4">
@@ -46,13 +68,13 @@
             {% endfor %}
         </div>
 
-        <p class="mt-4">Kamu menyimpan {{ products|length }} item pada aplikasi ini.</p>
+        <p class="mt-4" style="color: white;">Kamu menyimpan {{ products|length }} item pada aplikasi ini.</p>
 
         <div class="mt-4">
-            <a href="{% url 'main:create_product' %}" class="btn btn-success">Add New Product</a>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Product by AJAX</button>
         </div>
 
-        <h5 class="mt-4">Sesi terakhir login: {{ last_login }}</h5>
+        <h5 class="mt-4" style="color: white;">Sesi terakhir login: {{ last_login }}</h5>
 
         <div class="mt-4">
             <a href="{% url 'main:logout' %}" class="btn btn-secondary">Logout</a>
@@ -60,22 +82,104 @@
     </div>
 
     <style>
+        body {
+            background-image: url("https://cdn.discordapp.com/attachments/1145315809846104065/1161511952137343056/kashtira_arise_heart_menu_screen_md_by_thong3_dg0851q-fullview.png?ex=6538914d&is=65261c4d&hm=d9d563ba04308bfcb971827a2b290178967ba596f0769af488bcf4b7d7f6f6e7&&");
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+        }
+
         .outer-card {
             background-color: #ffffff;
             padding: 20px;
-            border: 1px solid #ccc; 
+            border: 1px solid #ccc;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         }
-        
+
         .inner-card {
             background-color: #f7f7f7;
             border: none;
             border-radius: 15px; /* Rounded edges for inner cards */
         }
-        
+
         .inner-card.last-row {
-            background-color: beige; /* Background color for the last row */
+            background-color: beige; /* Bacakground color for the last row */
+        }
+    </style>
+
+    <script>
+        async function getProducts() {
+            return fetch("{% url 'main:get_product_json' %}").then((res) => res.json())
         }
 
-    </style>
+        function refreshProducts() {
+            console.log(document.getElementById("products"));
+            fetch('/get-product-json/')
+            .then(response => response.json())
+            .then(data => {
+                const productContainer = document.getElementById("product_table");
+                productContainer.innerHTML = ''; 
+                data.forEach(product => {
+                    const newProductElement = document.createElement('div');
+                    newProductElement.innerHTML = `${product.fields.name} - ${product.fields.description} - ${product.fields.price} - ${product.fields.amount}`;
+                    productContainer.appendChild(newProductElement);
+                });
+            });
+        }
+       
+
+
+        document.getElementById('add-product-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            let name = document.getElementById('name').value;
+            let description = document.getElementById('description').value;
+            let price = document.getElementById('price').value;
+            let amount = document.getElementById('amount').value;
+
+            let formData = new FormData();
+            formData.append('name', name);
+            formData.append('description', description);
+            formData.append('price', price);
+            formData.append('amount', amount);
+
+            let csrfToken = document.getElementsByName("csrfmiddlewaretoken")[0].value;
+
+            let headers = new Headers();
+            headers.append('X-CSRFToken', csrfToken);
+            
+            let response = await fetch("{% url 'main:create_product_ajax' %}", {
+                method: 'POST',
+                headers: headers,
+                body: formData
+            });
+
+            let result = await response.json();
+
+            if (result.status === 'success') {
+                $('#exampleModal').modal('hide'); 
+                document.getElementById('add-product-form').reset();
+                refreshProducts(); 
+            }
+        });
+
+        function deleteProduct(id) {
+            const csrfToken = document.querySelector("[name=csrfmiddlewaretoken]").value;
+        
+            fetch(`/delete-product-ajax/${id}/`, {
+                method: 'DELETE',
+                headers: {
+                    'X-CSRFToken': csrfToken,
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    refreshProducts();
+                } else {
+                    alert('Something went wrong!');                
+                }
+            });
+        }
+    </script>
 {% endblock content %}

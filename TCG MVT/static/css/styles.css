@@ -1,7 +1,8 @@
 /* styles.css */
 
 body {
-    background-image: url('/static/pictures/wall.jpg'); /* Use the correct path */
+    background-image: url('https://cdn.discordapp.com/attachments/1159785368426655774/1159785452342091876/wall.jpg?ex=6532495f&is=651fd45f&hm=7ac83d710dae1258444588531d8f0690d4e5095fd34d24744cd68dcad7832bf5&
+    ); /* Use the correct path */
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed; /* Optional: To fix the background while scrolling */
