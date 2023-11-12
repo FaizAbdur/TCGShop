@@ -15,11 +15,10 @@ urlpatterns = [
     path('login/', login_user, name='login'),
     path('logout/', logout_user, name='logout'),
     path('edit-product/<int:id>', edit_product, name='edit_product'),
-    path('delete/<int:id>', delete_product, name='delete_product'), # sesuaikan dengan nama fungsi yang dibuat
     path('clean_cookie/', clean_cookie, name='clean_cookie'),
     path('get-product-json/', get_product_json, name='get_product_json'),
-    path('create-ajax/', create_product_ajax, name='create_product_ajax'),
-
+    path('create-product-ajax/', add_product_ajax, name='add_product_ajax'),
+    path('delete-product-ajax/<int:id>/', delete_product_ajax, name='delete_product_ajax'),
 ]   
 
 urlpatterns += staticfiles_urlpatterns()

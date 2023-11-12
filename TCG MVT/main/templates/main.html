@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #282626; padding: 20px;">
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #282626; padding: 20px; margin-right: auto; ">
         <div class="container">
             <a class="navbar-brand" href="#" style="font-weight: bold; font-size: 24px; color: white;">TCG Store</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -13,7 +13,7 @@
                         <a class="nav-link name-link" href="#" style="font-size: 20px; font-weight: bold; font-family: 'cursive'; color: white;">Name: {{ name }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class "nav-link class-link" href="#" style="font-size: 20px; font-weight: bold; font-family: 'cursive'; color: white;">Class: {{ class }}</a>
+                        <a class="nav-link class-link" href="#" style="font-size: 20px; font-weight: bold; font-family: 'cursive'; color: white;">Class: {{ class }}</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link logout-link" href="{% url 'main:logout' %}" style="font-size: 20px; font-weight: bold; font-family: 'cursive'; color: white;">Logout</a>
@@ -23,55 +23,52 @@
         </div>
     </nav>
 
-    <div class="modal fade" id="exampleModal" tabindex="-1">
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Add Product</h5>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Product</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="add-product-form">
+                    <form id="form" onsubmit="return false;">
                         {% csrf_token %}
-                        <input type="text" id="name" placeholder="Name">
-                        <input type="text" id="description" placeholder="Description">
-                        <input type="number" id="price" placeholder="Price">
-                        <input type="number" id="amount" placeholder="Amount">
-                        <button type="submit" class="btn btn-primary">Add</button>
+                        <div class="mb-3">
+                            <label for="name" class="col-form-label">Name:</label>
+                            <input type="text" class="form-control" id="name" name="name"></input>
+                        </div>
+                        <div class="mb-3">
+                            <label for="price" class="col-form-label">Price:</label>
+                            <input type="number" class="form-control" id="price" name="price"></input>
+                        </div>
+                        <div class="mb-3">
+                            <label for="amount" class="col-form-label">Amount:</label>
+                            <input type="text" class="form-control" id="amount" name="amount"></input>
+                        </div>                                          
+                        <div class="mb-3">
+                            <label for="description" class="col-form-label">Description:</label>
+                            <textarea class="form-control" id="description" name="description"></textarea>
+                        </div>
                     </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal">Add Product</button>
                 </div>
             </div>
         </div>
     </div>
-
+    
 
     <div class="container mt-5">
         <h1 class="mb-4" style="color: white;">Products</h1>
-        <div id="products"></div>
-        <div class="row">
-            {% for product in products %}
-                <div class="col-md-4">
-                    <div class="outer-card" style="background-color: {% if forloop.last %}#D3D3D3{% else %}#ffffff{% endif %};">
-                        <div class="inner-card card mb-4 {% if forloop.last %}last-row{% endif %}">
-                            <img src="https://upload.wikimedia.org/wikipedia/en/2/2b/Yugioh_Card_Back.jpg" alt="The back side of a card" class="card-img-top">
-                            <div class="card-body">
-                                <h5 class="card-title" style="font-size: 18px; font-weight: bold; font-family: 'Arial, sans-serif';">Product Name: {{ product.name }}</h5>
-                                <p class="card-text" style="font-size: 16px; font-family: 'Times New Roman', serif;">Description: {{ product.description }}</p>
-                                <p class="card-text" style="font-size: 16px; font-family: 'Courier New', monospace;">Price: {{ product.price }}</p>
-                                <p class="card-text" style="font-size: 16px; font-family: 'Verdana, sans-serif';">Amount: {{ product.amount }}</p>
-                                <a href="{% url 'main:edit_product' product.pk %}" class="btn btn-primary btn-sm">Edit</a>
-                                <a href="{% url 'main:delete_product' product.pk %}" class="btn btn-danger btn-sm">Delete</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
+    
+        <div id="product_container" class="row"></div>
 
         <p class="mt-4" style="color: white;">Kamu menyimpan {{ products|length }} item pada aplikasi ini.</p>
 
         <div class="mt-4">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Product by AJAX</button>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" id="addProductButton">Add Product by AJAX</button>
         </div>
 
         <h5 class="mt-4" style="color: white;">Sesi terakhir login: {{ last_login }}</h5>
@@ -83,85 +80,116 @@
 
     <style>
         body {
-            background-image: url("https://cdn.discordapp.com/attachments/1145315809846104065/1161511952137343056/kashtira_arise_heart_menu_screen_md_by_thong3_dg0851q-fullview.png?ex=6538914d&is=65261c4d&hm=d9d563ba04308bfcb971827a2b290178967ba596f0769af488bcf4b7d7f6f6e7&&");
+            background-color: rgb(31, 8, 31);
             background-repeat: no-repeat;
             background-attachment: fixed;
             background-size: cover;
         }
-
-        .outer-card {
+    
+        .product-container {
+            display: flex;
+            flex-wrap: wrap;
+            margin: -10px; 
+        }
+    
+        .card {
+            background-color: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin: 10px;
+            max-width: 250px; 
+        }
+        
+        .card .card-body {
             background-color: #ffffff;
-            padding: 20px;
-            border: 1px solid #ccc;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 10px;       
+            max-height: fit-content;
+        }
+        
+        .card-title {
+            font-weight: bold;
+            font-size: 16px; 
+            margin: 10px 0;
+        }
+        
+        .card-text {
+            color: #333;
+            margin: 10px 0;
+            font-size: 14px;
+        }
+        
+        .card-img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px 8px 0 0;
+        }
+        
+        .btn-primary,
+        .btn-danger {
+            margin-right: 5px;
+        }
+        
+        .last-card {
+            background-color: rgb(182, 6, 103);
         }
 
-        .inner-card {
-            background-color: #f7f7f7;
-            border: none;
-            border-radius: 15px; /* Rounded edges for inner cards */
-        }
 
-        .inner-card.last-row {
-            background-color: beige; /* Bacakground color for the last row */
-        }
+        
     </style>
 
     <script>
+
         async function getProducts() {
             return fetch("{% url 'main:get_product_json' %}").then((res) => res.json())
         }
 
-        function refreshProducts() {
-            console.log(document.getElementById("products"));
-            fetch('/get-product-json/')
-            .then(response => response.json())
-            .then(data => {
-                const productContainer = document.getElementById("product_table");
-                productContainer.innerHTML = ''; 
-                data.forEach(product => {
-                    const newProductElement = document.createElement('div');
-                    newProductElement.innerHTML = `${product.fields.name} - ${product.fields.description} - ${product.fields.price} - ${product.fields.amount}`;
-                    productContainer.appendChild(newProductElement);
-                });
-            });
-        }
-       
-
-
-        document.getElementById('add-product-form').addEventListener('submit', async function(e) {
-            e.preventDefault();
-
-            let name = document.getElementById('name').value;
-            let description = document.getElementById('description').value;
-            let price = document.getElementById('price').value;
-            let amount = document.getElementById('amount').value;
-
-            let formData = new FormData();
-            formData.append('name', name);
-            formData.append('description', description);
-            formData.append('price', price);
-            formData.append('amount', amount);
-
-            let csrfToken = document.getElementsByName("csrfmiddlewaretoken")[0].value;
-
-            let headers = new Headers();
-            headers.append('X-CSRFToken', csrfToken);
+        function addProduct() {
+            fetch("{% url 'main:add_product_ajax' %}", {
+                method: "POST",
+                body: new FormData(document.querySelector('#form'))
+            }).then(refreshProducts)
             
-            let response = await fetch("{% url 'main:create_product_ajax' %}", {
-                method: 'POST',
-                headers: headers,
-                body: formData
-            });
+            document.getElementById("form").reset();
+            return false;
+        }
+        
 
-            let result = await response.json();
+        function refreshProducts() {
+            fetch('/get-product-json/')
+                .then(response => response.json())
+                .then(data => {
+                    const productContainer = document.getElementById("product_container");
+                    productContainer.innerHTML = '';
+        
+                    data.forEach((product, index) => {
+                        const newProductElement = document.createElement('div');
+                        newProductElement.className = "card" + (index === data.length - 1 ? ' last-card' : '');
+        
+                        newProductElement.innerHTML = `
+                            <img src="https://upload.wikimedia.org/wikipedia/en/2/2b/Yugioh_Card_Back.jpg" alt="The back side of a card" class="card-img-top">
+                            <div class="card-body">
+                                <h5 class="card-title">${product.name}</h5>
+                                <p class="card-text">${product.description}</p>
+                                <p class="card-text">${product.price}</p>
+                                <p class="card-text">${product.amount}</p>
+                                <button onclick="deleteProduct(${product.id})" class="btn btn-danger btn-sm">Delete</button>
+                            </div>
+                        `;
+        
+                        productContainer.appendChild(newProductElement);
+                    });
+                });
+        }
+        
 
-            if (result.status === 'success') {
-                $('#exampleModal').modal('hide'); 
-                document.getElementById('add-product-form').reset();
-                refreshProducts(); 
-            }
+        document.addEventListener('DOMContentLoaded', function() {
+            refreshProducts();
         });
+
+        
+       
 
         function deleteProduct(id) {
             const csrfToken = document.querySelector("[name=csrfmiddlewaretoken]").value;
@@ -181,5 +209,8 @@
                 }
             });
         }
+
+        document.getElementById("button_add").onclick = addProduct;
+
     </script>
 {% endblock content %}

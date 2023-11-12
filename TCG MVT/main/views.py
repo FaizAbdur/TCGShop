@@ -16,7 +16,8 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-
+from django.forms.models import model_to_dict
+from django.http import HttpResponseNotFound
 
 # Create your views here.
 
@@ -151,11 +152,8 @@ def edit_product(request, id):
     return render(request, "edit_product.html", context)
 
 def delete_product(request, id):
-    # Get data berdasarkan ID
     product = Product.objects.get(pk = id)
-    # Hapus data
     product.delete()
-    # Kembali ke halaman awal
     return HttpResponseRedirect(reverse('main:show_main'))
 
 def clean_cookie(request):
@@ -164,27 +162,25 @@ def clean_cookie(request):
     return response
 
 def get_product_json(request):
-    product_item = Product.objects.all()
-    return HttpResponse(serializers.serialize('json', product_item))
+    products = Product.objects.filter(user=request.user)
+    products_list = [model_to_dict(product) for product in products]
+    return JsonResponse(products_list, safe=False)
 
 @csrf_exempt
-def create_product_ajax(request):
-    if request.method == "POST":
+def add_product_ajax(request):
+    if request.method == 'POST':
+        name = request.POST.get("name")
+        price = request.POST.get("price")
+        description = request.POST.get("description")
+        amount = request.POST.get("amount")
         user = request.user
-        name = request.POST.get('name')
-        description = request.POST.get('description')
-        price = request.POST.get('price')
-        amount = request.POST.get('amount')
 
-        new_product = Product.objects.create(
-            name=name,
-            description=description,
-            price=price,
-            amount=amount,
-            user = user
-        )
+        new_product = Product(name=name, price=price, amount = amount, description=description, user=user)
         new_product.save()
-        return JsonResponse({'status': 'success', 'message': 'Product added successfully.'})
+
+        return HttpResponse(b"CREATED", status=201)
+
+    return HttpResponseNotFound()
 
 def delete_product_ajax(request, id):
     if request.method == 'DELETE':
